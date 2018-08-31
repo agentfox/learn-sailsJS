@@ -16,10 +16,12 @@ module.exports = {
         type : 'string'
     },
     title : {
-        type : 'string'
+        type : 'string',
+        allowNull: true
     },
     completed: {
-        type : 'string'
+        type : 'string',
+        allowNull: true
       }
 
   },

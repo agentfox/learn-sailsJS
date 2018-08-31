@@ -28,6 +28,15 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
   'GET /api/posts' : 'PostController.get',
+  'POST /' : 'PostController.create',
+  
+  'GET /editor/:id': {
+    view: 'pages/editor',
+    locals: {
+      layout: 'layout/layouteditor'
+    }
+  },
+  'POST /editor/:id' : 'PostController.update',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
