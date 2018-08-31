@@ -29,6 +29,41 @@ module.exports = {
             })
         })
     },
+    getOne : async (req,res) => { // dung try catch
+        //Post.find( {where :{ userId : req.param('id') } , limit: 1, skip: 1, sort: []  } ) // 
+        
+        try {
+            let post = await Post.findOne({ title : req.param('title') } ) 
+            console.log("try");
+            if(!post || post === {}) {
+                return res.send({ 
+                    'success' : false,
+                    'message' : 'No record found'
+                })
+            }
+            return res.send({
+                'success' : true,
+                'message' : 'Record fetched',
+                'data'     : post
+            })
+        } catch(err) {
+            console.log("catccc");
+            sails.log.debug(err);
+            return res.send({
+                'success' : false,
+                'message' : 'unable to connect'
+            })
+        }
+        /*
+        let post = await Post.findOne({ title : req.param('id') } ) 
+        .then(function(post){
+            
+        })
+        .catch(function(err) {
+            
+        })
+        */
+    },
 
     create : function(req,res) {
         Post.create(req.allParams())
@@ -47,25 +82,50 @@ module.exports = {
             })
         })
     },
+    
+    
+    update : async (req,res) => {
 
-    update : function(req,res) {
-        req.log.debug(req.param('id'));
-        Post.update(req.param('id'),req.allParams())
-        .then(function(post){
-            console.log('updated the post');
-            return res.send({
-                'success' : true,
-                'message' : 'Updated'
-            })
-        })
-        .catch(function(err) {
+        try {
+            console.log(req.param('userId'));
+            await Post.update( {id:req.param('id')} )
+            .set({
+                userId : req.param('userId') ,
+                title : req.param('title') ,
+                completed : req.param('completed') ,
+
+            });
+            return res.ok();
+        }
+        catch(err) {
             sails.log.debug(err);
             return res.send({
                 'success' : false,
                 'message' : 'unable to connect'
             })
-        })
-    },
+        }
+    }
+
+
+
+    // update : function(req,res) {
+    //     req.log.debug(req.param('id'));
+    //     Post.update(req.param('id'),req.allParams())
+    //     .then(function(post){
+    //         console.log('updated the post');
+    //         return res.send({
+    //             'success' : true,
+    //             'message' : 'Updated'
+    //         })
+    //     })
+    //     .catch(function(err) {
+    //         sails.log.debug(err);
+    //         return res.send({
+    //             'success' : false,
+    //             'message' : 'unable to connect'
+    //         })
+    //     })
+    // },
     // delete: function(req, res){
     //     Champ.destroy(req.param('id'))
     //       .then(function(champ){
