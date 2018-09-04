@@ -34,7 +34,6 @@ module.exports = {
         
         try {
             let post = await Post.findOne({ title : req.param('title') } ) 
-            console.log("try");
             if(!post || post === {}) {
                 return res.send({ 
                     'success' : false,
@@ -47,7 +46,6 @@ module.exports = {
                 'data'     : post
             })
         } catch(err) {
-            console.log("catccc");
             sails.log.debug(err);
             return res.send({
                 'success' : false,
@@ -87,7 +85,7 @@ module.exports = {
     update : async (req,res) => {
 
         try {
-            console.log(req.param('userId'));
+            console.log(req.param('id'));
             await Post.update( {id:req.param('id')} )
             .set({
                 userId : req.param('userId') ,
@@ -104,28 +102,25 @@ module.exports = {
                 'message' : 'unable to connect'
             })
         }
+    },
+
+    delete : async (req,res) => {
+
+        try {
+            console.log(req.param('id'));
+            await Post.destroy( {id:req.param('id')} )
+            return res.ok();
+        }
+        catch(err) {
+            sails.log.debug(err);
+            return res.send({
+                'success' : false,
+                'message' : 'unable to connect'
+            })
+        }
     }
 
 
-
-    // update : function(req,res) {
-    //     req.log.debug(req.param('id'));
-    //     Post.update(req.param('id'),req.allParams())
-    //     .then(function(post){
-    //         console.log('updated the post');
-    //         return res.send({
-    //             'success' : true,
-    //             'message' : 'Updated'
-    //         })
-    //     })
-    //     .catch(function(err) {
-    //         sails.log.debug(err);
-    //         return res.send({
-    //             'success' : false,
-    //             'message' : 'unable to connect'
-    //         })
-    //     })
-    // },
     // delete: function(req, res){
     //     Champ.destroy(req.param('id'))
     //       .then(function(champ){

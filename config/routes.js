@@ -27,13 +27,13 @@ module.exports.routes = {
   '/': {
     view: 'pages/homepage'
   }, 
-  '/editor': {
-    view: 'pages/editor'
-  },
+
   'GET /api/posts' : 'PostController.get',
   'POST /' : 'PostController.create',
   'GET /editor/:title': 'PostController.getOne',
   'PUT /editor/:id' : 'PostController.update',
+  'DELETE /editor/:id' : 'PostController.delete',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
